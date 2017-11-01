@@ -1,1 +1,30 @@
 # php5-fpm-alpine
+
+## Nginx config sample
+server {
+    listen 80;
+    server_name SERVER_NAME;
+    root /path/to/doc/root;
+
+    location ~ [^/]\.php(/|$) {
+      fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+      if (!-f $document_root$fastcgi_script_name) {
+        return 404;
+      }
+
+      # Mitigate https://httpoxy.org/ vulnerabilities
+      fastcgi_param HTTP_PROXY "";
+
+      fastcgi_pass php5-fpm:9000;
+      fastcgi_index index.php;
+
+      # include the fastcgi_param setting
+      include /etc/nginx/fastcgi_params;
+
+      # SCRIPT_FILENAME parameter is used for PHP FPM determining
+      #  the script name. If it is not set in fastcgi_params file,
+      # i.e. /etc/nginx/fastcgi_params or in the parent contexts,
+      # please comment off following line:
+      fastcgi_param  SCRIPT_FILENAME   $document_root$fastcgi_script_name;
+    }
+  }
