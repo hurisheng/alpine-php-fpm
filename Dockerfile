@@ -4,6 +4,6 @@ LABEL author="hurisheng"
 
 RUN apk add --no-cache bash freetype-dev libpng-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ \
-    && docker-php-ext-install gd mysql pdo_mysql
+    && docker-php-ext-install gd pdo_mysql
 
 VOLUME ["/opt/html"]
