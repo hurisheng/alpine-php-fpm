@@ -11,4 +11,4 @@ VOLUME [ "/etc/php83/php-fpm.d", "/etc/php83/conf.d", "/opt/html" ]
 
 EXPOSE 9000
 
-CMD [ "php-fpm", "-F" ]
+CMD [ "php-fpm83", "-F" ]
